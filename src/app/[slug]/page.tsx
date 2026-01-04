@@ -1,9 +1,17 @@
 import { notFound } from "next/navigation";
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { unstable_noStore as noStore } from "next/cache";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 
 export default async function TenantPage({ params }: { params: { slug: string } }) {
+  
   const slug = params.slug;
   const sb = supabaseAdmin();
+  noStore();
+
 
   const { data: profile } = await sb.from("profiles").select("*").eq("slug", slug).maybeSingle();
   if (!profile) return notFound();
