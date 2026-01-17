@@ -88,6 +88,7 @@ export default function AdminHome() {
                       </div>
                       <div className="row" style={{ marginTop: 10 }}>
                         <a className="btn secondary" href={`/${p.slug}`} target="_blank">Open public</a>
+                        <a className="btn" href={`/admin/profiles/${p.id}/setup`}>Manage</a>
                       </div>
                     </div>
                   ))

@@ -2,7 +2,7 @@ import "./globals.scss";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Booking Platform",
+  title: "MC Booking Platform",
   description: "Multi-tenant booking funnels for MCs and event professionals.",
 };
 

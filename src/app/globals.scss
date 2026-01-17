@@ -4,48 +4,274 @@
   --text: rgba(255,255,255,0.92);
   --muted: rgba(255,255,255,0.72);
   --border: rgba(255,255,255,0.12);
-  --accent: #20c56c;
+
+  --accent: #20c56c;          /* overwritten per profile via inline style */
   --accentSoft: rgba(32,197,108,0.18);
+
   --shadow: 0 18px 40px rgba(0,0,0,0.35);
   --radius: 18px;
   --max: 1120px;
-  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+
+  --inputBg: rgba(0,0,0,0.22);
+  --mediaBg: rgba(0,0,0,0.18);
+
+  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji","Segoe UI Emoji";
+}
+
+/* =====================
+   THEMES (per profile)
+   Apply on public pages via:
+   <main data-theme="dark|light" className="pageRoot" ... />
+   ===================== */
+
+[data-theme="dark"]{
+  --bg: #0b0f0d;
+  --panel: rgba(255,255,255,0.06);
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.72);
+  --border: rgba(255,255,255,0.12);
+
+  --shadow: 0 18px 40px rgba(0,0,0,0.35);
+  --inputBg: rgba(0,0,0,0.22);
+  --mediaBg: rgba(0,0,0,0.18);
+}
+
+// [data-theme="light"]{
+//   --bg: #f6f8f7;
+//   --panel: #ffffff;
+//   --text: rgba(10,12,11,0.92);
+//   --muted: rgba(10,12,11,0.68);
+//   --border: rgba(10,12,11,0.12);
+
+//   --shadow: 0 18px 40px rgba(0,0,0,0.08);
+//   --inputBg: rgba(10,12,11,0.04);
+//   --mediaBg: rgba(10,12,11,0.04);
+
+//   /* optional: slightly softer default accent glow on light */
+//   --accentSoft: color-mix(in srgb, var(--accent) 18%, transparent);
+// }
+
+[data-theme="light"]{
+  /* Base */
+  --bg: #f6f8f7;
+
+  /* Cards stay white, but not sterile */
+  --panel: rgba(255,255,255,0.92);
+
+  /* Text */
+  --text: rgba(10,12,11,0.92);
+  --muted: rgba(10,12,11,0.66);
+
+  /* Borders + shadow */
+  --border: rgba(10,12,11,0.10);
+  --shadow: 0 18px 40px rgba(0,0,0,0.08);
+
+  /* Soft tinted surfaces (this is the “modern” feel) */
+  --inputBg: color-mix(in srgb, var(--accent) 6%, #ffffff);
+  --mediaBg: color-mix(in srgb, var(--accent) 5%, #ffffff);
+  --chipBg: color-mix(in srgb, var(--accent) 8%, #ffffff);
+
+  /* Accent glow stays tasteful on light */
+  --accentSoft: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+
+/* Base usage */
+.pageRoot{
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
 }
 
 *{ box-sizing:border-box; }
-html,body{ padding:0; margin:0; background:var(--bg); color:var(--text); font-family:var(--font); }
+html,body{
+  padding:0; margin:0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+}
 a{ color:inherit; text-decoration:none; }
 button,input,select,textarea{ font-family:inherit; }
+
 .container{ max-width:var(--max); margin:0 auto; padding:28px 18px; }
-.card{ background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+
+.card{
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
 .row{ display:flex; gap:14px; flex-wrap:wrap; }
-.kicker{ color:var(--accent); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-size:12px; }
+
+.kicker{
+  color: var(--accent);
+  font-weight:700;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  font-size:12px;
+}
+
 .h1{ font-size:44px; line-height:1.05; margin:10px 0 12px; }
 .h2{ font-size:26px; margin:0 0 10px; }
-.p{ color:var(--muted); line-height:1.55; margin:0 0 10px; }
+.p{ color: var(--muted); line-height:1.55; margin:0 0 10px; }
+
 .btn{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:12px 16px; border-radius:14px;
-  border:1px solid rgba(32,197,108,0.45);
-  background:linear-gradient(180deg, rgba(32,197,108,0.22), rgba(32,197,108,0.10));
-  color:var(--text); font-weight:700; cursor:pointer;
-  transition: transform .12s ease, background .2s ease, border-color .2s ease;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 16px;
+  border-radius:14px;
+
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 22%, transparent),
+    color-mix(in srgb, var(--accent) 10%, transparent)
+  );
+  color: var(--text);
+  font-weight:700;
+  cursor:pointer;
+  transition: transform .12s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
-.btn:hover{ transform: translateY(-1px); border-color: rgba(32,197,108,0.70); background:linear-gradient(180deg, rgba(32,197,108,0.30), rgba(32,197,108,0.14)); }
-.btn.secondary{ border-color: var(--border); background: rgba(255,255,255,0.05); }
+
+.btn:hover{
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 75%, transparent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 30%, transparent),
+    color-mix(in srgb, var(--accent) 14%, transparent)
+  );
+  box-shadow: 0 0 0 3px var(--accentSoft);
+}
+
+/* secondary stays theme-aware */
+.btn.secondary{
+  border-color: var(--border);
+  background: color-mix(in srgb, var(--panel) 65%, transparent);
+}
+
 .badge{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:6px 10px; border-radius:999px; border:1px solid var(--border);
-  background: rgba(255,255,255,0.04); color: var(--muted); font-size:12px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--panel) 65%, transparent);
+  color: var(--muted);
+  font-size:12px;
 }
+
 .hr{ height:1px; background:var(--border); margin:18px 0; border:0; }
+
 .field{ display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
 .label{ font-weight:700; font-size:13px; }
+
 .input, .select, .textarea{
-  padding:12px 12px; border-radius:14px; background: rgba(0,0,0,0.22);
-  border:1px solid var(--border); color:var(--text);
+  padding:12px 12px;
+  border-radius:14px;
+  background: var(--inputBg);
+  border:1px solid var(--border);
+  color: var(--text);
   outline:none;
 }
+
+.input:focus, .select:focus, .textarea:focus{
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--border));
+  box-shadow: 0 0 0 3px var(--accentSoft);
+}
+
 .textarea{ min-height:110px; resize:vertical; }
+
 .grid2{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:14px; }
-@media (max-width: 720px){ .grid2{ grid-template-columns: 1fr; } .h1{ font-size:36px; } }
+@media (max-width: 720px){
+  .grid2{ grid-template-columns: 1fr; }
+  .h1{ font-size:36px; }
+}
+
+.tabs{ display:flex; gap:10px; flex-wrap:wrap; }
+.tab{
+  padding:8px 12px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background: color-mix(in srgb, var(--panel) 65%, transparent);
+  font-weight:800;
+}
+.tab:hover{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accentSoft);
+}
+
+.media{
+  display:block;
+  flex: 1 1 200px;
+  min-width: 180px;
+  max-width: 320px;
+  border-radius: 14px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background: var(--mediaBg);
+}
+.media img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  display:block;
+}
+
+.embed{
+  position:relative;
+  width:100%;
+  padding-top:56.25%;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background: var(--mediaBg);
+}
+.embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+.list{ margin:10px 0 0; padding-left:18px; color: var(--muted); }
+.list li{ margin:6px 0; }
+
+
+
+
+/* Cards: a touch of depth */
+.card{
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+}
+
+/* Badges: tinted chip look (instead of flat white) */
+.badge{
+  background: var(--chipBg);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  color: var(--muted);
+}
+
+/* Tabs: same chip style */
+.tab{
+  background: var(--chipBg);
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
+}
+
+.tab:hover{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accentSoft);
+}
+/* Inputs: slightly tinted, crisp focus */
+.input, .select, .textarea{
+  background: var(--inputBg);
+  border: 1px solid var(--border);
+}
+.input:focus, .select:focus, .textarea:focus{
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--border));
+  box-shadow: 0 0 0 3px var(--accentSoft);
+}
+
